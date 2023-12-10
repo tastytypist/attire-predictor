@@ -148,7 +148,7 @@
 (defrule cooking_check
     ?p <- (user (sleep no) (cooking NONE) (result NONE))
     =>
-    (modify ?p (cooking (get_value "Are you at going to cook right now? ")))
+    (modify ?p (cooking (get_value "Are you going to cook right now? ")))
 )
 
 ; ******* RULE 14 *******
