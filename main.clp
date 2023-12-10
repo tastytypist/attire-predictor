@@ -205,115 +205,127 @@
 ;;;********************************
 
 (defrule is_business_attire
-    ?p <- (user (work true))
+    ?p <- (user (outdoor true) (hot true) (work true))
     =>
     (modify ?p (result business_attire))
 )
 
 (defrule is_uniform
-    ?p <- (user (formal true) (school true))
+    ?p <- (user (outdoor true) (hot true) (work false) (school true) (formal true))
     =>
     (modify ?p (result uniform))
 )
 
 (defrule is_casual
-    ?p <- (user (formal false) (school true))
+    ?p <- (user (outdoor true) (hot true) (work false) (school true) (formal false))
     =>
     (modify ?p (result casual))
 )
 
-(defrule is_sportwear
-    ?p <- (user (or (workout true) (and (sport true) (beach false))))
+(defrule is_sportwear_1
+    ?p <- (user (outdoor true) (hot true) (work false) (school false) (workout true))
     =>
     (modify ?p (result sportwear))
 )
 
 (defrule is_swimsuit
-    ?p <- (user (beach true))
+    ?p <- (user (outdoor true) (hot true) (work false) (school false) (workout false) (beach true))
     =>
     (modify ?p (result swimsuit))
 )
 
+(defrule is_sportwear_2
+    ?p <- (user (outdoor true) (hot true) (work false) (school false) (workout false) (beach false) (sport true))
+    =>
+    (modify ?p (result sportwear))
+)
+
 (defrule is_t_shirt_jeans
-    ?p <- (user (sport false))
+    ?p <- (user (outdoor true) (hot true) (work false) (school false) (workout false) (beach false) (sport false))
     =>
     (modify ?p (result t_shirt_jeans))
 )
 
 (defrule is_raincoat
-    ?p <- (user (rainy true))
+    ?p <- (user (outdoor true) (hot false) (rainy true))
     =>
     (modify ?p (result raincoat))
 )
 
 (defrule is_winter_cloth
-    ?p <- (user (snowy true))
+    ?p <- (user (outdoor true) (hot false) (rainy false) (snowy true))
     =>
     (modify ?p (result winter_cloth))
 )
 
 (defrule is_sweater
-    ?p <- (user (snowy false))
+    ?p <- (user (outdoor true) (hot false) (rainy false) (snowy false))
     =>
     (modify ?p (result sweater))
 )
 
+(defrule is_sportwear_3
+    ?p <- (user (outdoor false) (workout true))
+    =>
+    (modify ?p (result sportwear))
+)
+
 (defrule is_pajamas
-    ?p <- (user (sleep true))
+    ?p <- (user (outdoor false) (workout false) (sleep true))
     =>
     (modify ?p (result pajamas))
 )
 
 (defrule is_apron
-    ?p <- (user (cooking true))
+    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking true))
     =>
     (modify ?p (result apron))
 )
 
 (defrule is_tuxedo
-    ?p <- (user (male true) (party true))
+    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party true) (formal true) (male true))
     =>
     (modify ?p (result tuxedo))
 )
 
 (defrule is_dress
-    ?p <- (user (male false) (party true))
+    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party true) (formal true) (male false))
     =>
     (modify ?p (result dress))
 )
 
 (defrule is_cosplay_outfit
-    ?p <- (user (cosplay true))
+    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party true) (formal false) (dresscode true) (cosplay true))
     =>
     (modify ?p (result cosplay_outfit))
 )
 
 (defrule is_halloween_outfit
-    ?p <- (user (halloween true))
+    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party true) (formal false) (dresscode true) (cosplay false) (halloween true))
     =>
     (modify ?p (result halloween_outfit))
 )
 
 (defrule is_dresscode_outfit
-    ?p <- (user (halloween false))
+    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party true) (formal false) (dresscode true) (cosplay false) (halloween false))
     =>
     (modify ?p (result dresscode_outfit))
 )
 
 (defrule is_house_party_outfit
-    ?p <- (user (dresscode false) (party true))
+    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party true) (formal false) (dresscode false))
     =>
     (modify ?p (result house_party_outfit))
 )
 
 (defrule is_soft_fabric_attire
-    ?p <- (user (hot true) (outdoor false))
+    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party false) (hot true))
     =>
     (modify ?p (result soft_fabric_attire))
 )
 
 (defrule is_sweatshirt
-    ?p <- (user (hot false) (outdoor false))
+    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party false) (hot false))
     =>
     (modify ?p (result sweatshirt))
 )
