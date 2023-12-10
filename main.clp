@@ -8,7 +8,7 @@
 ;;;*****************************
 
 (deffunction ask_question (?question)
-   (bind $?allowed (create$ true false))
+   (bind $?allowed (create$ yes no))
    (printout t ?question)
    (bind ?answer (read))
    (if (lexemep ?answer) 
@@ -31,23 +31,23 @@
 
 (deftemplate user
     (slot ID         (type INTEGER)  (default ?NONE))
-    (slot outdoor    (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot workout    (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot sleep      (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot cooking    (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot party      (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot hot        (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot formal     (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot dresscode  (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot male       (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot cosplay    (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot halloween  (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot rainy      (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot work       (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot snowy      (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot school     (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot beach      (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
-    (slot sport      (type SYMBOL)   (default NONE) (allowed-symbols NONE true false))
+    (slot outdoor    (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot workout    (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot sleep      (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot cooking    (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot party      (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot hot        (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot formal     (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot dresscode  (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot male       (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot cosplay    (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot halloween  (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot rainy      (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot work       (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot snowy      (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot school     (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot beach      (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
+    (slot sport      (type SYMBOL)   (default NONE) (allowed-symbols NONE yes no))
     (slot result     (type SYMBOL)   (default NONE))
 )
 
@@ -69,133 +69,133 @@
 
 ; ******* RULE 2 *******
 (defrule hot_outdoor_check
-    ?p <- (user (outdoor true) (hot NONE) (result NONE))
+    ?p <- (user (outdoor yes) (hot NONE) (result NONE))
     =>
     (modify ?p (hot (get_value "Is it hot outdoor? ")))
 )
 
 ; ******* RULE 3 *******
 (defrule work_check
-    ?p <- (user (hot true) (outdoor true) (work NONE) (result NONE))
+    ?p <- (user (hot yes) (outdoor yes) (work NONE) (result NONE))
     =>
     (modify ?p (work (get_value "Are you working right now? ")))
 )
 
 ; ******* RULE 4 *******
 (defrule school_check
-    ?p <- (user (work false) (school NONE) (result NONE))
+    ?p <- (user (work no) (school NONE) (result NONE))
     =>
     (modify ?p (school (get_value "Are you at school right now? ")))
 )
 
 ; ******* RULE 5 *******
 (defrule school_formal_check
-    ?p <- (user (school true) (formal NONE) (result NONE))
+    ?p <- (user (school yes) (formal NONE) (result NONE))
     =>
     (modify ?p (formal (get_value "Is your school requires you to wear uniform? ")))
 )
 
 ; ******* RULE 6 *******
 (defrule workout_outdoor_check
-    ?p <- (user (school false) (outdoor true) (workout NONE) (result NONE))
+    ?p <- (user (school no) (outdoor yes) (workout NONE) (result NONE))
     =>
     (modify ?p (workout (get_value "Are you doing workout right now? ")))
 )
 
 ; ******* RULE 7 *******
 (defrule beach_check
-    ?p <- (user (workout false) (outdoor true) (beach NONE) (result NONE))
+    ?p <- (user (workout no) (outdoor yes) (beach NONE) (result NONE))
     =>
     (modify ?p (beach (get_value "Are you at the beach? ")))
 )
 
 ; ******* RULE 8 *******
 (defrule sport_check
-    ?p <- (user (beach false) (sport NONE) (result NONE))
+    ?p <- (user (beach no) (sport NONE) (result NONE))
     =>
     (modify ?p (school (get_value "Do you do sport right now? ")))
 )
 
 ; ******* RULE 9 *******
 (defrule rainy_check
-    ?p <- (user (hot false) (outdoor true) (rainy NONE) (result NONE))
+    ?p <- (user (hot no) (outdoor yes) (rainy NONE) (result NONE))
     =>
     (modify ?p (rainy (get_value "Is it raining right now? ")))
 )
 
 ; ******* RULE 10 *******
 (defrule snowy_check
-    ?p <- (user (rainy false) (outdoor true) (snowy NONE) (result NONE))
+    ?p <- (user (rainy no) (outdoor yes) (snowy NONE) (result NONE))
     =>
     (modify ?p (snowy (get_value "Is it snowing right now? ")))
 )
 
 ; ******* RULE 11 *******
 (defrule workout_indoor_check
-    ?p <- (user (outdoor false) (workout NONE) (result NONE))
+    ?p <- (user (outdoor no) (workout NONE) (result NONE))
     =>
     (modify ?p (workout (get_value "Are you doing workout right now? ")))
 )
 
 ; ******* RULE 12 *******
 (defrule sleep_check
-    ?p <- (user (workout false) (outdoor false) (sleep NONE) (result NONE))
+    ?p <- (user (workout no) (outdoor no) (sleep NONE) (result NONE))
     =>
     (modify ?p (sleep (get_value "Are you going to sleep right now? ")))
 )
 
 ; ******* RULE 13 *******
 (defrule cooking_check
-    ?p <- (user (sleep false) (cooking NONE) (result NONE))
+    ?p <- (user (sleep no) (cooking NONE) (result NONE))
     =>
     (modify ?p (cooking (get_value "Are you at going to cook right now? ")))
 )
 
 ; ******* RULE 14 *******
 (defrule party_check
-    ?p <- (user (cooking false) (party NONE) (result NONE))
+    ?p <- (user (cooking no) (party NONE) (result NONE))
     =>
     (modify ?p (party (get_value "Are you going to party right now? ")))
 )
 
 ; ******* RULE 15 *******
 (defrule party_formal_check
-    ?p <- (user (party true) (outdoor false) (formal NONE) (result NONE))
+    ?p <- (user (party yes) (outdoor no) (formal NONE) (result NONE))
     =>
     (modify ?p (formal (get_value "Is it a formal party right now? ")))
 )
 
 ; ******* RULE 16 *******
 (defrule male_check
-    ?p <- (user (formal true) (party true) (male NONE) (result NONE))
+    ?p <- (user (formal yes) (party yes) (male NONE) (result NONE))
     =>
     (modify ?p (male (get_value "Are you male? ")))
 )
 
 ; ******* RULE 17 *******
 (defrule dresscode_check
-    ?p <- (user (formal false) (party true) (dresscode NONE) (result NONE))
+    ?p <- (user (formal no) (party yes) (dresscode NONE) (result NONE))
     =>
     (modify ?p (dresscode (get_value "Does the party require a dress code? ")))
 )
 
 ; ******* RULE 18 *******
 (defrule cosplay_check
-    ?p <- (user (dresscode true) (formal false) (cosplay NONE) (result NONE))
+    ?p <- (user (dresscode yes) (formal no) (cosplay NONE) (result NONE))
     =>
     (modify ?p (cosplay (get_value "Is it a cosplay party? ")))
 )
 
 ; ******* RULE 19 *******
 (defrule halloween_check
-    ?p <- (user (cosplay false) (halloween NONE) (result NONE))
+    ?p <- (user (cosplay no) (halloween NONE) (result NONE))
     =>
     (modify ?p (halloween (get_value "Is it halloween party? ")))
 )
 
 ; ******* RULE 20 *******
 (defrule hot_indoor_check
-    ?p <- (user (party false) (outdoor false) (hot NONE) (result NONE))
+    ?p <- (user (party no) (outdoor no) (hot NONE) (result NONE))
     =>
     (modify ?p (hot (get_value "Is it hot right now? ")))
 )
@@ -205,127 +205,127 @@
 ;;;********************************
 
 (defrule is_business_attire
-    ?p <- (user (outdoor true) (hot true) (work true))
+    ?p <- (user (outdoor yes) (hot yes) (work yes))
     =>
     (modify ?p (result business_attire))
 )
 
 (defrule is_uniform
-    ?p <- (user (outdoor true) (hot true) (work false) (school true) (formal true))
+    ?p <- (user (outdoor yes) (hot yes) (work no) (school yes) (formal yes))
     =>
     (modify ?p (result uniform))
 )
 
 (defrule is_casual
-    ?p <- (user (outdoor true) (hot true) (work false) (school true) (formal false))
+    ?p <- (user (outdoor yes) (hot yes) (work no) (school yes) (formal no))
     =>
     (modify ?p (result casual))
 )
 
 (defrule is_sportwear_1
-    ?p <- (user (outdoor true) (hot true) (work false) (school false) (workout true))
+    ?p <- (user (outdoor yes) (hot yes) (work no) (school no) (workout yes))
     =>
     (modify ?p (result sportwear))
 )
 
 (defrule is_swimsuit
-    ?p <- (user (outdoor true) (hot true) (work false) (school false) (workout false) (beach true))
+    ?p <- (user (outdoor yes) (hot yes) (work no) (school no) (workout no) (beach yes))
     =>
     (modify ?p (result swimsuit))
 )
 
 (defrule is_sportwear_2
-    ?p <- (user (outdoor true) (hot true) (work false) (school false) (workout false) (beach false) (sport true))
+    ?p <- (user (outdoor yes) (hot yes) (work no) (school no) (workout no) (beach no) (sport yes))
     =>
     (modify ?p (result sportwear))
 )
 
 (defrule is_t_shirt_jeans
-    ?p <- (user (outdoor true) (hot true) (work false) (school false) (workout false) (beach false) (sport false))
+    ?p <- (user (outdoor yes) (hot yes) (work no) (school no) (workout no) (beach no) (sport no))
     =>
     (modify ?p (result t_shirt_jeans))
 )
 
 (defrule is_raincoat
-    ?p <- (user (outdoor true) (hot false) (rainy true))
+    ?p <- (user (outdoor yes) (hot no) (rainy yes))
     =>
     (modify ?p (result raincoat))
 )
 
 (defrule is_winter_cloth
-    ?p <- (user (outdoor true) (hot false) (rainy false) (snowy true))
+    ?p <- (user (outdoor yes) (hot no) (rainy no) (snowy yes))
     =>
     (modify ?p (result winter_cloth))
 )
 
 (defrule is_sweater
-    ?p <- (user (outdoor true) (hot false) (rainy false) (snowy false))
+    ?p <- (user (outdoor yes) (hot no) (rainy no) (snowy no))
     =>
     (modify ?p (result sweater))
 )
 
 (defrule is_sportwear_3
-    ?p <- (user (outdoor false) (workout true))
+    ?p <- (user (outdoor no) (workout yes))
     =>
     (modify ?p (result sportwear))
 )
 
 (defrule is_pajamas
-    ?p <- (user (outdoor false) (workout false) (sleep true))
+    ?p <- (user (outdoor no) (workout no) (sleep yes))
     =>
     (modify ?p (result pajamas))
 )
 
 (defrule is_apron
-    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking true))
+    ?p <- (user (outdoor no) (workout no) (sleep no) (cooking yes))
     =>
     (modify ?p (result apron))
 )
 
 (defrule is_tuxedo
-    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party true) (formal true) (male true))
+    ?p <- (user (outdoor no) (workout no) (sleep no) (cooking no) (party yes) (formal yes) (male yes))
     =>
     (modify ?p (result tuxedo))
 )
 
 (defrule is_dress
-    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party true) (formal true) (male false))
+    ?p <- (user (outdoor no) (workout no) (sleep no) (cooking no) (party yes) (formal yes) (male no))
     =>
     (modify ?p (result dress))
 )
 
 (defrule is_cosplay_outfit
-    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party true) (formal false) (dresscode true) (cosplay true))
+    ?p <- (user (outdoor no) (workout no) (sleep no) (cooking no) (party yes) (formal no) (dresscode yes) (cosplay yes))
     =>
     (modify ?p (result cosplay_outfit))
 )
 
 (defrule is_halloween_outfit
-    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party true) (formal false) (dresscode true) (cosplay false) (halloween true))
+    ?p <- (user (outdoor no) (workout no) (sleep no) (cooking no) (party yes) (formal no) (dresscode yes) (cosplay no) (halloween yes))
     =>
     (modify ?p (result halloween_outfit))
 )
 
 (defrule is_dresscode_outfit
-    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party true) (formal false) (dresscode true) (cosplay false) (halloween false))
+    ?p <- (user (outdoor no) (workout no) (sleep no) (cooking no) (party yes) (formal no) (dresscode yes) (cosplay no) (halloween no))
     =>
     (modify ?p (result dresscode_outfit))
 )
 
 (defrule is_house_party_outfit
-    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party true) (formal false) (dresscode false))
+    ?p <- (user (outdoor no) (workout no) (sleep no) (cooking no) (party yes) (formal no) (dresscode no))
     =>
     (modify ?p (result house_party_outfit))
 )
 
 (defrule is_soft_fabric_attire
-    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party false) (hot true))
+    ?p <- (user (outdoor no) (workout no) (sleep no) (cooking no) (party no) (hot yes))
     =>
     (modify ?p (result soft_fabric_attire))
 )
 
 (defrule is_sweatshirt
-    ?p <- (user (outdoor false) (workout false) (sleep false) (cooking false) (party false) (hot false))
+    ?p <- (user (outdoor no) (workout no) (sleep no) (cooking no) (party no) (hot no))
     =>
     (modify ?p (result sweatshirt))
 )
