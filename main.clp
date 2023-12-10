@@ -201,121 +201,121 @@
 )
 
 ;;;********************************
-;;;* INFERENCE RULES *
+;;;*       INFERENCE RULES        *
 ;;;********************************
 
 (defrule is_business_attire
     ?p <- (user (work true))
     =>
-    (modify ?p (result (business_attire)))
+    (modify ?p (result business_attire))
 )
 
 (defrule is_uniform
     ?p <- (user (formal true) (school true))
     =>
-    (modify ?p (result (uniform)))
+    (modify ?p (result uniform))
 )
 
 (defrule is_casual
     ?p <- (user (formal false) (school true))
     =>
-    (modify ?p (result (casual)))
+    (modify ?p (result casual))
 )
 
 (defrule is_sportwear
     ?p <- (user (or (workout true) (and (sport true) (beach false))))
     =>
-    (modify ?p (result (sportwear)))
+    (modify ?p (result sportwear))
 )
 
 (defrule is_swimsuit
     ?p <- (user (beach true))
     =>
-    (modify ?p (result (swimsuit)))
+    (modify ?p (result swimsuit))
 )
 
 (defrule is_t_shirt_jeans
     ?p <- (user (sport false))
     =>
-    (modify ?p (result (t_shirt_jeans)))
+    (modify ?p (result t_shirt_jeans))
 )
 
 (defrule is_raincoat
     ?p <- (user (rainy true))
     =>
-    (modify ?p (result (raincoat)))
+    (modify ?p (result raincoat))
 )
 
 (defrule is_winter_cloth
     ?p <- (user (snowy true))
     =>
-    (modify ?p (result (winter_cloth)))
+    (modify ?p (result winter_cloth))
 )
 
 (defrule is_sweater
     ?p <- (user (snowy false))
     =>
-    (modify ?p (result (sweater)))
+    (modify ?p (result sweater))
 )
 
 (defrule is_pajamas
     ?p <- (user (sleep true))
     =>
-    (modify ?p (result (pajamas)))
+    (modify ?p (result pajamas))
 )
 
 (defrule is_apron
     ?p <- (user (cooking true))
     =>
-    (modify ?p (result (apron)))
+    (modify ?p (result apron))
 )
 
 (defrule is_tuxedo
     ?p <- (user (male true) (party true))
     =>
-    (modify ?p (result (tuxedo)))
+    (modify ?p (result tuxedo))
 )
 
 (defrule is_dress
     ?p <- (user (male false) (party true))
     =>
-    (modify ?p (result (dress)))
+    (modify ?p (result dress))
 )
 
 (defrule is_cosplay_outfit
     ?p <- (user (cosplay true))
     =>
-    (modify ?p (result (cosplay_outfit)))
+    (modify ?p (result cosplay_outfit))
 )
 
 (defrule is_halloween_outfit
     ?p <- (user (halloween true))
     =>
-    (modify ?p (result (halloween_outfit)))
+    (modify ?p (result halloween_outfit))
 )
 
 (defrule is_dresscode_outfit
     ?p <- (user (halloween false))
     =>
-    (modify ?p (result (dresscode_outfit)))
+    (modify ?p (result dresscode_outfit))
 )
 
 (defrule is_house_party_outfit
     ?p <- (user (dresscode false) (party true))
     =>
-    (modify ?p (result (house_party_outfit)))
+    (modify ?p (result house_party_outfit))
 )
 
 (defrule is_soft_fabric_attire
     ?p <- (user (hot true) (outdoor false))
     =>
-    (modify ?p (result (soft_fabric_attire)))
+    (modify ?p (result soft_fabric_attire))
 )
 
 (defrule is_sweatshirt
     ?p <- (user (hot false) (outdoor false))
     =>
-    (modify ?p (result (sweatshirt)))
+    (modify ?p (result sweatshirt))
 )
 
 ;;;********************************
@@ -331,7 +331,7 @@
 )
 
 (defrule print_result
-    (patient (ID ?id) (result ?r))
+    (user (ID ?id) (result ?r))
     (not (eq ?r NONE))
     =>
     (if (eq ?r business_attire)     then (bind ?p "Business attire"))
